@@ -131,3 +131,4 @@ document.getElementById('loadQuote').addEventListener("click", function() {
     printQuote();
     printQuoteIntervalId = setInterval(printQuote, 15000);
 }, false);
+
