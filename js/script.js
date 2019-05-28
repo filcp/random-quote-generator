@@ -73,6 +73,22 @@ const getRandomQuote = () => {
 };
 
 /**
+ * Hold the setInterval Id
+ * @type {number}
+ */
+let printQuoteIntervalId;
+
+/**
+ * Set an interval for the printQuote function. With this we can reset any interval previously set when calling the function again.
+ */
+const setQuoteInterval = () => {
+    if (printQuoteIntervalId) {
+        clearInterval(printQuoteIntervalId);
+    }
+    printQuoteIntervalId = setInterval(printQuote, 15000);
+};
+
+/**
  * Get a random quote and print it to the screen.
  */
 const printQuote = () => {
@@ -109,6 +125,9 @@ const printQuote = () => {
     // Print the quote and change the <body> background colour.
     document.querySelector('#quote-box').innerHTML = output;
     document.body.style.backgroundColor = randomQuote.color;
+
+    // Call the function to set an interval.
+    setQuoteInterval();
 };
 
 /**
@@ -117,18 +136,7 @@ const printQuote = () => {
 printQuote();
 
 /**
- * Set an interval to print another quote every 15 seconds after page load
- * @type {number}
- */
-let printQuoteIntervalId = setInterval(printQuote, 15000);
-
-/**
  * When clicking the "Show another quote" button generate and print another quote.
- * Because I don't want the quote to change before 15 seconds, clear the the previous interval and set a new one.
  */
-document.getElementById('loadQuote').addEventListener("click", function() {
-    clearInterval(printQuoteIntervalId);
-    printQuote();
-    printQuoteIntervalId = setInterval(printQuote, 15000);
-}, false);
+document.getElementById('loadQuote').addEventListener("click", printQuote, false);
 
